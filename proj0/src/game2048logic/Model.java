@@ -175,7 +175,7 @@ public class Model {
         int targetY = y;
 
         // TODO: Tasks 5, 6, and 10. Fill in this function.
-        // Task 5: Move Tile Up
+        // Task 6: Merging Tiles
         int s = board.size();
         while (targetY < s - 1) {
             if (board.tile(x, targetY + 1) != null && board.tile(x, targetY + 1).value() != myValue) {
@@ -183,7 +183,10 @@ public class Model {
             }
             targetY++;
         }
-        board.move(x, targetY, currTile);
+        /* This condition ensures that we won't merge a already merged tile. */
+        if (board.tile(x, targetY) == null || !board.tile(x, targetY).wasMerged()) {
+            board.move(x, targetY, currTile);
+        }
     }
 
     /** Handles the movements of the tilt in column x of the board
