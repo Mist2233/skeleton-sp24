@@ -119,11 +119,39 @@ public class Model {
      * 2. There are two adjacent tiles with the same value.
      */
     public boolean atLeastOneMoveExists() {
+        /* Empty space ensures that at least one move exists. */
         if (emptySpaceExists()) {
             return true;
         }
 
+        /* When there's no empty space, we need to check out all the adjacent tiles. */
+        int s = board.size();
+        if (s == 2) {
+            int v1 = board.tile(0, 0).value();
+            int v2 = board.tile(0, 1).value();
+            int v3 = board.tile(1, 0).value();
+            int v4 = board.tile(1, 1).value();
+            return (v1 == v2 || v2 == v3 || v3 == v4 || v4 == v1);
+        }
 
+        // horizontal
+        for (int x = 1; x < s - 1; x++) {
+            for (int y = 0; y < s; y++) {
+                if (board.tile(x, y).value() == board.tile(x - 1, y).value()
+                    || board.tile(x, y).value() == board.tile(x + 1, y).value()) {
+                    return true;
+                }
+            }
+        }
+        // vertical
+        for (int x = 0; x < s; x++) {
+            for (int y = 1; y < s - 1; y++) {
+                if (board.tile(x, y).value() == board.tile(x, y - 1).value()
+                    || board.tile(x, y).value() == board.tile(x, y + 1).value()) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
