@@ -178,14 +178,18 @@ public class Model {
         // Task 6: Merging Tiles
         int s = board.size();
         while (targetY < s - 1) {
-            if (board.tile(x, targetY + 1) != null && board.tile(x, targetY + 1).value() != myValue) {
+            if (board.tile(x, targetY + 1) != null
+                    && (board.tile(x, targetY + 1).value() != myValue || board.tile(x, targetY + 1).wasMerged())) {
                 break;
             }
             targetY++;
         }
         /* This condition ensures that we won't merge a already merged tile. */
-        if (board.tile(x, targetY) == null || !board.tile(x, targetY).wasMerged()) {
+        if (board.tile(x, targetY) == null) {
             board.move(x, targetY, currTile);
+        } else if (!board.tile(x, targetY).wasMerged()) {
+            board.move(x, targetY, currTile);
+            score += 2 * myValue;
         }
     }
 
@@ -196,7 +200,7 @@ public class Model {
      * */
     public void tiltColumn(int x) {
         // TODO: Task 7. Fill in this function.
-        for (int y = board.size() - 1; y >= 0; y--) {
+        for (int y = board.size() - 2; y >= 0; y--) {
             if (board.tile(x, y) != null) {
                 moveTileUpAsFarAsPossible(x, y);
             }
@@ -205,6 +209,11 @@ public class Model {
 
     public void tilt(Side side) {
         // TODO: Tasks 8 and 9. Fill in this function.
+        board.setViewingPerspective(side);
+        for (int x = 0; x < board.size(); x++) {
+            tiltColumn(x);
+        }
+        board.setViewingPerspective(Side.NORTH);
     }
 
     /** Tilts every column of the board toward SIDE.
