@@ -132,6 +132,16 @@ public class TestNbyN {
         checkTilt(new Model(before, 0), new Model(after, 0), Side.NORTH);
 
         before = new int[][] {
+                {0, 2},
+                {2, 2},
+        };
+        after = new int[][] {
+                {2, 4},
+                {0, 0},
+        };
+        checkTilt(new Model(before, 0), new Model(after, 4), Side.NORTH);
+
+        before = new int[][] {
                 {2, 2},
                 {0, 2},
         };
