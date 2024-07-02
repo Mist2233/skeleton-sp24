@@ -129,8 +129,8 @@ public class Model {
         if (s == 2) {
             int v1 = board.tile(0, 0).value();
             int v2 = board.tile(0, 1).value();
-            int v3 = board.tile(1, 0).value();
-            int v4 = board.tile(1, 1).value();
+            int v3 = board.tile(1, 1).value();
+            int v4 = board.tile(1, 0).value();
             return (v1 == v2 || v2 == v3 || v3 == v4 || v4 == v1);
         }
 
@@ -177,20 +177,30 @@ public class Model {
         // TODO: Tasks 5, 6, and 10. Fill in this function.
         // Task 6: Merging Tiles
         int s = board.size();
-        while (targetY < s - 1) {
-            if (board.tile(x, targetY + 1) != null
-                    && (board.tile(x, targetY + 1).value() != myValue || board.tile(x, targetY + 1).wasMerged())) {
-                break;
-            }
+        // Check which type this move should be.
+        boolean flag = false;
+
+        /* Search the farthest null tile. */
+        while (targetY < s - 1 && board.tile(x, targetY + 1) == null) {
             targetY++;
         }
-        /* This condition ensures that we won't merge a already merged tile. */
-        if (board.tile(x, targetY) == null) {
-            board.move(x, targetY, currTile);
-        } else if (!board.tile(x, targetY).wasMerged()) {
-            board.move(x, targetY, currTile);
-            score += 2 * myValue;
+        if (targetY == y && targetY != s - 1 && (board.tile(x, targetY + 1).value() != myValue || board.tile(x, targetY + 1).wasMerged())) {
+            // Do nothing.
+            return;
         }
+        // Now, the tile (x, targetY) have to be empty tile.
+        if (targetY == s - 1) {
+            board.move(x, targetY, currTile);
+            return;
+        }
+        if (board.tile(x, targetY + 1).value() == myValue && !board.tile(x, targetY + 1).wasMerged()) {
+            targetY++;
+            board.move(x,  targetY, currTile);
+            score += 2 * myValue;
+        } else {
+            board.move(x, targetY, currTile);
+        }
+
     }
 
     /** Handles the movements of the tilt in column x of the board
