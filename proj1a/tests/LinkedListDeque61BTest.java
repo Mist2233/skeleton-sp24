@@ -2,6 +2,8 @@ import jh61b.utils.Reflection;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Deque;
+
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
 
@@ -57,4 +59,32 @@ public class LinkedListDeque61BTest {
      }
 
     // Below, you'll write your own tests for LinkedListDeque61B.
+    @Test
+    /* This test is used to test the empty case. */
+    public void testEmpty() {
+        Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+        assertThat(lld1.isEmpty()).isTrue();
+    }
+    @Test
+    public void testOneItem() {
+        Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+        lld1.addLast(1);
+        assertThat(lld1.get(0) == 1).isTrue();
+    }
+    @Test
+    public void testOneItemRecursive() {
+        Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+        lld1.addLast(1);
+        assertThat(lld1.getRecursive(0) == 1).isTrue();
+    }
+    @Test
+    public void testEmptyGet() {
+        Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+        assertThat(lld1.get(0) == null).isTrue();
+    }
+    @Test
+    public void testEmptyGetRecursive() {
+        Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+        assertThat(lld1.getRecursive(0) == null).isTrue();
+    }
 }
