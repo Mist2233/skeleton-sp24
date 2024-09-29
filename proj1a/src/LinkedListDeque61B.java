@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LinkedListDeque61B<T> implements Deque61B<T>{
+    // 先定义一个Node子类，便于后续操作。
     public class Node {
         public T item;
         public Node next;
@@ -69,7 +70,9 @@ public class LinkedListDeque61B<T> implements Deque61B<T>{
     public int size() {
         return size;
     }
-
+    /** 这里removeFirst居然是返回新的第一个元素，而不是被去除的元素？
+     * 是我当时写错了还是？？？
+     * 我觉得应该是返回被去掉的元素，这里改一下吧*/
     @Override
     public T removeFirst() {
         Node first = sentinel.next;

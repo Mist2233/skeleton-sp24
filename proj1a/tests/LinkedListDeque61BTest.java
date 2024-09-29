@@ -66,13 +66,13 @@ public class LinkedListDeque61BTest {
         assertThat(lld1.isEmpty()).isTrue();
     }
     @Test
-    public void testOneItem() {
+    public void testGetOneItem() {
         Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
         lld1.addLast(1);
         assertThat(lld1.get(0) == 1).isTrue();
     }
     @Test
-    public void testOneItemRecursive() {
+    public void testGetOneItemRecursively() {
         Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
         lld1.addLast(1);
         assertThat(lld1.getRecursive(0) == 1).isTrue();
@@ -86,5 +86,26 @@ public class LinkedListDeque61BTest {
     public void testEmptyGetRecursive() {
         Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
         assertThat(lld1.getRecursive(0) == null).isTrue();
+    }
+    @Test
+    public void testGetSeveralItems() {
+        Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+        lld1.addLast(1);
+        lld1.addLast(2);
+        lld1.addFirst(4);
+        assertThat(lld1.get(0) == 4).isTrue();
+        assertThat(lld1.get(1) == 1).isTrue();
+        assertThat(lld1.get(2) == 2).isTrue();
+    }
+    @Test
+    public void testRemoveFirst() {
+        Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+        lld1.addFirst(1);
+        lld1.addLast(2);
+        assertThat(lld1.toList()).containsExactly(1, 2);
+        int removed_item = lld1.removeFirst();
+        System.out.print(removed_item);
+        assertThat(removed_item == 1).isTrue();
+        assertThat(lld1.toList()).containsExactly(2);
     }
 }
